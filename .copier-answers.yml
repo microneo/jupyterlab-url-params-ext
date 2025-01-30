@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.3.7
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: croadden@gmail.com
+author_name: vladislav.bartalevich
+has_binder: true
+has_settings: false
+kind: frontend
+labextension_name: jupyterlab_url_params_ext
+project_short_description: A JupyterLab extension to fill cell params based on URL
+    params.
+python_name: jupyterlab_url_params_ext
+repository: https://github.com/Vladislav-Bartalevich/jupyterlab-url-params-ext/
+test: true
+
