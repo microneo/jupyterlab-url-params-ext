@@ -345,6 +345,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   requires: [INotebookTracker],
 
   activate: (app: JupyterFrontEnd, tracker: INotebookTracker) => {
+    console.log('JupyterLab extension jupyterlab_url_params_ext is activated!');
     // Listen for changes to the currently active notebook
     tracker.currentChanged.connect((_, notebook) => {
       setupNotebookHandlers(notebook);
