@@ -1,6 +1,13 @@
-import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import {
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin
+} from '@jupyterlab/application';
 import { ISessionContext, ISessionContextDialogs } from '@jupyterlab/apputils';
-import { INotebookTracker, Notebook, NotebookActions } from '@jupyterlab/notebook';
+import {
+  INotebookTracker,
+  Notebook,
+  NotebookActions
+} from '@jupyterlab/notebook';
 import { ITranslator } from '@jupyterlab/translation';
 
 /** A marker that defines the cell where parameters will be inserted. */
@@ -58,7 +65,10 @@ function getAllPossibleParams(): URLSearchParams {
             }
           }
         } catch (e) {
-          console.error('notebookparams: error parsing referrer next parameter', e);
+          console.error(
+            'notebookparams: error parsing referrer next parameter',
+            e
+          );
         }
       }
     }
@@ -79,9 +89,11 @@ function getAllPossibleParams(): URLSearchParams {
 
   // 3. If still empty, do a fallback manual parsing on possible URLs
   if (searchParams.size === 0) {
-    const fallbackUrls = [window.location.href, document.referrer, window.location.search].filter(
-      Boolean
-    );
+    const fallbackUrls = [
+      window.location.href,
+      document.referrer,
+      window.location.search
+    ].filter(Boolean);
 
     for (const urlString of fallbackUrls) {
       if (!urlString.includes('?')) {
@@ -100,11 +112,17 @@ function getAllPossibleParams(): URLSearchParams {
       });
 
       if (extractedParams.size > 0) {
-        console.log('notebookparams: extracted params manually', extractedParams);
+        console.log(
+          'notebookparams: extracted params manually',
+          extractedParams
+        );
         searchParams = extractedParams;
         // Store for future reloads
         try {
-          sessionStorage.setItem('jupyterlab_url_params', searchParams.toString());
+          sessionStorage.setItem(
+            'jupyterlab_url_params',
+            searchParams.toString()
+          );
         } catch (e) {
           console.error('notebookparams: error storing in sessionStorage', e);
         }
@@ -140,7 +158,9 @@ function processNextParameter(params: NotebookParameters, nextValue: string) {
 /**
  * Builds a dictionary (object) of all parameters, skipping or merging special cases like 'next'.
  */
-function buildParamsFromSearchParams(searchParams: URLSearchParams): NotebookParameters {
+function buildParamsFromSearchParams(
+  searchParams: URLSearchParams
+): NotebookParameters {
   const params: NotebookParameters = {};
 
   searchParams.forEach((rawValue, rawKey) => {
@@ -239,13 +259,22 @@ function runAllCells(
   if (!notebook.model) {
     return Promise.resolve(false);
   }
-  return NotebookActions.runAll(notebook, sessionContext, sessionDialogs, translator);
+  return NotebookActions.runAll(
+    notebook,
+    sessionContext,
+    sessionDialogs,
+    translator
+  );
 }
 
 /**
  * Executes all cells if 'autorun' in parameters is set to 'true', waiting for the kernel to be idle.
  */
-function handleAutorun(params: NotebookParameters, notebook: Notebook, sessionContext: ISessionContext): void {
+function handleAutorun(
+  params: NotebookParameters,
+  notebook: Notebook,
+  sessionContext: ISessionContext
+): void {
   // Check if autorun is enabled
   if (!params.autorun || params.autorun.toLowerCase() !== 'true') {
     return;
@@ -268,7 +297,10 @@ function handleAutorun(params: NotebookParameters, notebook: Notebook, sessionCo
 /**
  * The main function to process the notebook: insert parameters and (optionally) run.
  */
-function processNotebook(notebookContent: Notebook, sessionContext: ISessionContext): void {
+function processNotebook(
+  notebookContent: Notebook,
+  sessionContext: ISessionContext
+): void {
   const params = fillParametersFromUrl(notebookContent);
   // If 'autorun' is enabled, run the notebook
   handleAutorun(params, notebookContent, sessionContext);
@@ -280,7 +312,10 @@ function processNotebook(notebookContent: Notebook, sessionContext: ISessionCont
  * - When the session connection status changes
  */
 function setupNotebookHandlers(
-  notebook: { content: Notebook; context: { sessionContext: ISessionContext } } | null
+  notebook: {
+    content: Notebook;
+    context: { sessionContext: ISessionContext };
+  } | null
 ): void {
   if (!notebook) {
     return;
@@ -291,7 +326,9 @@ function setupNotebookHandlers(
     processNotebook(content, context.sessionContext);
   }
 
-  content.modelChanged.connect(() => processNotebook(content, context.sessionContext));
+  content.modelChanged.connect(() =>
+    processNotebook(content, context.sessionContext)
+  );
   context.sessionContext.connectionStatusChanged.connect(() =>
     processNotebook(content, context.sessionContext)
   );

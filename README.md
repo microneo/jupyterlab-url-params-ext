@@ -3,7 +3,6 @@
 [![Github Actions Status](https://github.com/Vladislav-Bartalevich/jupyterlab-url-params-ext/workflows/Build/badge.svg)](https://github.com/Vladislav-Bartalevich/jupyterlab-url-params-ext/actions/workflows/build.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Vladislav-Bartalevich/jupyterlab-url-params-ext//main?urlpath=lab)
 
-
 A JupyterLab extension to fill cell params based on URL params.
 
 ## Requirements
